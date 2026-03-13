@@ -64,6 +64,16 @@ This project is built with:
 
 Simply open [Lovable](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and click on Share -> Publish.
 
+### GitHub Pages でプレビューする
+
+1. このリポジトリを GitHub に push する（または親リポジトリ [okubo-hp](https://github.com/rossoandoy/okubo-hp) に push する）。
+2. リポジトリの **Settings → Pages** を開く。
+3. **Source** で **GitHub Actions** を選ぶ。
+4. `main` に push すると `.github/workflows/deploy-pages.yml` が動き、ビルド結果が GitHub Pages にデプロイされる。
+5. 公開 URL: `https://<ユーザー名>.github.io/<リポジトリ名>/`  
+   - 例: リポジトリが `professor-s-keio-portal` なら `https://rossoandoy.github.io/professor-s-keio-portal/`  
+   - 親リポジトリ `okubo-hp` にソースを push している場合は `https://rossoandoy.github.io/okubo-hp/`
+
 ## Can I connect a custom domain to my Lovable project?
 
 Yes, you can!

@@ -14,8 +14,8 @@ export default {
     },
     extend: {
       fontFamily: {
-        display: ['Cormorant Garamond', 'Georgia', 'serif'],
-        body: ['Source Sans 3', 'Helvetica Neue', 'sans-serif'],
+        display: ['Arial', 'Hiragino Kaku Gothic ProN', 'Meiryo', 'sans-serif'],
+        body: ['IBM Plex Sans', 'IBM Plex Sans JP', 'Helvetica Neue', 'sans-serif'],
       },
       colors: {
         border: "hsl(var(--border))",

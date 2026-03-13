@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Menu, X, Globe } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
@@ -8,28 +9,29 @@ const Navigation = () => {
   const { lang, setLang, t } = useLanguage();
 
   const navItems = [
-    { label: t("Research", "研究"), href: "#research" },
-    { label: t("Publications", "業績"), href: "#publications" },
-    { label: t("Career", "経歴"), href: "#career" },
-    { label: t("Contact", "連絡先"), href: "#contact" },
+    { label: t("Research", "研究"), to: "/#research" },
+    { label: t("Publications", "業績"), to: "/#publications" },
+    { label: t("By topic", "トピック別"), to: "/by-topic" },
+    { label: t("Career", "経歴"), to: "/#career" },
+    { label: t("Contact", "連絡先"), to: "/#contact" },
   ];
 
   return (
     <nav className="sticky top-0 z-50 bg-background/80 backdrop-blur-md border-b border-border">
       <div className="container mx-auto px-6 flex items-center justify-between h-14">
-        <a href="#" className="font-display font-bold text-lg text-foreground">
+        <Link to="/" className="font-display font-bold text-lg text-foreground">
           {t("T. Okubo", "大久保 敏弘")}
-        </a>
+        </Link>
 
         <div className="hidden md:flex items-center gap-8">
           {navItems.map((item) => (
-            <a
-              key={item.href}
-              href={item.href}
+            <Link
+              key={item.to}
+              to={item.to}
               className="text-sm font-body text-muted-foreground hover:text-foreground transition-colors"
             >
               {item.label}
-            </a>
+            </Link>
           ))}
           <button
             onClick={() => setLang(lang === "en" ? "ja" : "en")}
@@ -64,14 +66,14 @@ const Navigation = () => {
           className="md:hidden border-t border-border bg-background"
         >
           {navItems.map((item) => (
-            <a
-              key={item.href}
-              href={item.href}
+            <Link
+              key={item.to}
+              to={item.to}
               onClick={() => setOpen(false)}
               className="block px-6 py-3 text-sm font-body text-muted-foreground hover:text-foreground hover:bg-muted transition-colors"
             >
               {item.label}
-            </a>
+            </Link>
           ))}
         </motion.div>
       )}

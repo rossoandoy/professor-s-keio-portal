@@ -45,7 +45,7 @@
     --sidebar-border: 220 13% 91%;
     --sidebar-ring: 217.2 91.2% 59.8%;
 
-    --font-display: 'IBM Plex Sans', 'IBM Plex Sans JP', 'Helvetica Neue', sans-serif;
+    --font-display: Arial, 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', Meiryo, sans-serif;
     --font-body: 'IBM Plex Sans', 'IBM Plex Sans JP', 'Helvetica Neue', sans-serif;
 
     --gradient-hero: linear-gradient(160deg, hsl(220 35% 18%), hsl(220 30% 28%));
