@@ -1,17 +1,21 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { Menu, X, Globe } from "lucide-react";
+import { Menu, X, Globe, ChevronDown } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 const Navigation = () => {
   const [open, setOpen] = useState(false);
   const { lang, setLang, t } = useLanguage();
 
-  const navItems = [
+  const mainNavItems = [
     { label: t("Research", "研究"), to: "/#research" },
-    { label: t("Publications", "業績"), to: "/#publications" },
-    { label: t("By topic", "トピック別"), to: "/by-topic" },
     { label: t("Career", "経歴"), to: "/#career" },
     { label: t("Contact", "連絡先"), to: "/#contact" },
   ];
@@ -24,7 +28,31 @@ const Navigation = () => {
         </Link>
 
         <div className="hidden md:flex items-center gap-8">
-          {navItems.map((item) => (
+          <Link
+            to="/#research"
+            className="text-sm font-body text-muted-foreground hover:text-foreground transition-colors"
+          >
+            {t("Research", "研究")}
+          </Link>
+          <DropdownMenu>
+            <DropdownMenuTrigger className="text-sm font-body text-muted-foreground hover:text-foreground transition-colors flex items-center gap-0.5 outline-none data-[state=open]:text-foreground">
+              {t("Publications", "業績")}
+              <ChevronDown className="w-3.5 h-3.5" />
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="start">
+              <DropdownMenuItem asChild>
+                <Link to="/#publications" className="cursor-pointer">
+                  {t("Selected", "代表作")}
+                </Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem asChild>
+                <Link to="/by-topic" className="cursor-pointer">
+                  {t("By topic", "トピック別")}
+                </Link>
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+          {mainNavItems.slice(1).map((item) => (
             <Link
               key={item.to}
               to={item.to}
@@ -65,7 +93,7 @@ const Navigation = () => {
           animate={{ opacity: 1, height: "auto" }}
           className="md:hidden border-t border-border bg-background"
         >
-          {navItems.map((item) => (
+          {mainNavItems.map((item) => (
             <Link
               key={item.to}
               to={item.to}
@@ -75,6 +103,25 @@ const Navigation = () => {
               {item.label}
             </Link>
           ))}
+          <div className="border-t border-border">
+            <div className="px-6 py-2 text-xs font-body font-semibold text-muted-foreground uppercase tracking-wider">
+              {t("Publications", "業績")}
+            </div>
+            <Link
+              to="/#publications"
+              onClick={() => setOpen(false)}
+              className="block px-6 py-2.5 pl-8 text-sm font-body text-muted-foreground hover:text-foreground hover:bg-muted transition-colors"
+            >
+              {t("Selected", "代表作")}
+            </Link>
+            <Link
+              to="/by-topic"
+              onClick={() => setOpen(false)}
+              className="block px-6 py-2.5 pl-8 text-sm font-body text-muted-foreground hover:text-foreground hover:bg-muted transition-colors"
+            >
+              {t("By topic", "トピック別")}
+            </Link>
+          </div>
         </motion.div>
       )}
     </nav>
