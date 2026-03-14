@@ -23,6 +23,8 @@
 - **公開**: 静的ファイルを慶應 Web サーバの `public_html` に配置。当面は成果物 ZIP を手動でアップロード。
 - **デプロイ**: main マージ後に CI で成果物 ZIP を生成。ロールバック用に ZIP を保持する。
 - **観測**: GA4 で KPI（doi_click, scholar_click, contact_click 等）を計測。Sentry でフロントエラー監視（フェーズ3）。
+- **リポジトリ構成**: 親リポジトリ okubo の配下に、Git サブモジュールで professor-s-keio-portal と okubo-personal-page を配置。他環境では `git clone --recurse-submodules <親URL> okubo` で取得。
+- **ナビ構成**: Research（/#research）, Publications（Selected, By topic）, CV（/cv）, Contact（/#contact）。参照: okubo-personal-page の構成。
 
 ---
 
@@ -36,6 +38,10 @@
 | SPEC Publications モデル | 3, a | 3-6-2 コンテンツモデル（year, authors, title, venue, category, doi_or_url）, a 5-2 Selected（contribution_summary）, 6-1 表示原則 |
 | SPEC Decap | 3 | 3-6-1 管理画面, 3-6-2 コンテンツモデル, 3-6-3 GitHub OAuth |
 | SPEC GA4 | 2, a | 2-8-1 KPI 計測, a 2-2 KPI |
+
+### 参照リポジトリ
+
+- **okubo-personal-page**: 構成（Research, Publications, CV, Contact）の参考。親 okubo をクローンするとサブモジュールとして `okubo-personal-page/` が含まれる。
 
 ### プロジェクト文書のパス（okubo リポジトリ / ワークスペース想定）
 

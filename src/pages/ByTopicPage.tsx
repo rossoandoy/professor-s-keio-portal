@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { LanguageProvider } from "@/contexts/LanguageContext";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
@@ -27,35 +28,41 @@ const PublicationItem = ({ pub }: { pub: PublicationByTopic }) => (
   <article className="border-l-2 border-border hover:border-accent pl-4 py-2 transition-colors">
     <div className="flex items-baseline gap-2 mb-0.5">
       <span className="text-xs font-body font-semibold text-accent shrink-0">{pub.year}</span>
-      <h3 className="text-sm font-display font-semibold text-foreground leading-snug">{pub.title}</h3>
+      {pub.slug ? (
+        <h3 className="text-sm font-display font-semibold text-foreground leading-snug">
+          <Link to={`/publications/${pub.slug}`} className="text-foreground hover:text-accent hover:underline">
+            {pub.title}
+          </Link>
+        </h3>
+      ) : (
+        <h3 className="text-sm font-display font-semibold text-foreground leading-snug">{pub.title}</h3>
+      )}
     </div>
     <p className="text-xs text-muted-foreground font-body">{pub.authors}</p>
     <p className="text-xs font-body">
       <span className="italic text-foreground/70">{pub.journal}</span>
       {pub.detail && <span className="text-muted-foreground">, {pub.detail}</span>}
     </p>
-    {(pub.doi || pub.scholar_url) && (
+    {(pub.doi || pub.scholar_url || pub.pdf_url || pub.preprint_url) && (
       <p className="text-xs font-body mt-1 flex flex-wrap gap-3">
         {pub.doi && (
-          <a
-            href={doiLink(pub.doi)}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-accent hover:underline"
-            aria-label="DOI"
-          >
+          <a href={doiLink(pub.doi)} target="_blank" rel="noopener noreferrer" className="text-accent hover:underline" aria-label="DOI">
             DOI
           </a>
         )}
         {pub.scholar_url && (
-          <a
-            href={pub.scholar_url}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-accent hover:underline"
-            aria-label="Google Scholar"
-          >
+          <a href={pub.scholar_url} target="_blank" rel="noopener noreferrer" className="text-accent hover:underline" aria-label="Google Scholar">
             Google Scholar
+          </a>
+        )}
+        {pub.pdf_url && (
+          <a href={pub.pdf_url} target="_blank" rel="noopener noreferrer" className="text-accent hover:underline" aria-label="PDF">
+            PDF
+          </a>
+        )}
+        {pub.preprint_url && (
+          <a href={pub.preprint_url} target="_blank" rel="noopener noreferrer" className="text-accent hover:underline" aria-label="Preprint">
+            Preprint
           </a>
         )}
       </p>

@@ -13,6 +13,13 @@
 - [x] By topic ページの論文カードに DOI / Scholar リンクを表示する
 - [ ] （任意）Selected で contribution_summary を表示する
 - [ ] （任意）GA4 の scholar_click / doi_click はフェーズ3 に回す
+- [x] 論文詳細ページ `/publications/:slug`（要約・引用・DOI/Scholar/PDF/Preprint・引用数）
+- [x] CV ページ `/cv`（PDF ダウンロード ＋ 検索・フィルタ可能な論文 DB）
+- [x] 論文一覧に PDF / プレプリントリンクを表示する
+- [x] 引用数（手動フィールド）を詳細ページに表示する
+- [x] 研究テーマ別特集ページ `/research/:topicSlug`（A〜G）
+- [x] ナビを Research / Publications / CV / Contact に統一
+- [x] データを単一ソース（publicationsByTopic）に統一し slug / selected を付与
 
 ---
 

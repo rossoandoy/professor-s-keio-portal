@@ -6,18 +6,22 @@
 
 ## 現在のフェーズ
 
-**次に実施: フェーズ1（内容リッチ化）**
+**フェーズ1 リッチ化を拡張済み。次はフェーズ2（Decap CMS）の検討。**
 
 ---
 
-## フェーズ1: 内容リッチ化
+## フェーズ1: 内容リッチ化（拡張済み）
 
-- 論文に **DOI リンク** を追加（要件: a 6-1, 2 の doi_click）
-- 論文に **Google Scholar リンク** を追加（KPI: scholar_click）
-- 表示形式は APA 準拠・年降順のまま（a 6-1）
-- データは当面コード内（TS）のまま。後で CMS 化時に content に移行
+- 論文に **DOI / Google Scholar リンク** を追加（完了）
+- **論文詳細ページ** `/publications/:slug`（要約・引用・DOI/Scholar/PDF/Preprint・引用数表示）（完了）
+- **CV ページ** `/cv`：CV PDF ダウンロード ＋ 検索・フィルタ可能な論文 DB（年度・トピック・ジャーナル）（完了）
+- **PDF / プレプリント** リンクをデータと一覧・詳細に表示（完了）
+- **引用数** は手動フィールドで詳細ページに表示（自動取得は別フェーズ）
+- **研究テーマ別特集** `/research/:topicSlug`（A〜G のテーマ別論文一覧）（完了）
+- ナビを **Research / Publications / CV / Contact** に統一（完了）
+- データは単一ソース `publicationsByTopic`（slug, selected, abstract, pdf_url, preprint_url, citation_count 等）
 
-**完了条件**: Selected Publications および By topic ページの論文に DOI / Scholar リンクが表示され、クリックで遷移できる。
+**完了条件**: 上記が実装され、Selected / By topic / CV から詳細ページへ遷移できる。
 
 ---
 
@@ -50,7 +54,7 @@
 
 フェーズ2 では論文フィールドに doi / scholar_url を含め、フェーズ3 でそれらのクリックを計測する。
 
-**将来拡張**: a 4 の Research Agenda 単独ページ、Policy & Advisory、Grants、Teaching、Join the Lab、News、CV 等はフェーズ2以降で検討する。
+**将来拡張**: a 4 の Research Agenda 単独ページ、Policy & Advisory、Grants、Teaching、Join the Lab、News 等はフェーズ2以降で検討する。CV はフェーズ1で実装済み（/cv）。
 
 ---
 

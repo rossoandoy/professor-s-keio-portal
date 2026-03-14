@@ -16,7 +16,7 @@ const Navigation = () => {
 
   const mainNavItems = [
     { label: t("Research", "研究"), to: "/#research" },
-    { label: t("Career", "経歴"), to: "/#career" },
+    { label: t("CV", "CV"), to: "/cv" },
     { label: t("Contact", "連絡先"), to: "/#contact" },
   ];
 

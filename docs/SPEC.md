@@ -17,9 +17,16 @@
 | detail | ✓ | string | 巻号・ページ等 |
 | doi | — | string | DOI（ID または `https://doi.org/xxxx`） |
 | scholar_url | — | string | Google Scholar の当該論文 URL |
+| slug | — | string | 詳細ページ URL 用（未設定時は title+year から自動生成） |
+| abstract | — | string | 要約 |
+| pdf_url | — | string | PDF への外部リンク |
+| preprint_url | — | string | プレプリントへの外部リンク |
+| citation_count | — | number | 引用数（手動入力。自動取得は別フェーズ） |
+| citation_source | — | string | 引用元（例: Google Scholar, Scopus） |
 | contribution_summary | — | string | 1〜2行の貢献要約（a 5-2） |
 | category | — | string | カテゴリ（Refereed / Books / Policy / Japanese 等） |
 | lead_article | — | boolean | Lead article 等の強調表示 |
+| selected | — | boolean | トップページ「主要業績」に表示するか |
 
 ### 1-2. By topic 用拡張
 

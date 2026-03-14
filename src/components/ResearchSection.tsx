@@ -1,5 +1,7 @@
+import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { topics as researchThemes, topicIdToSlug } from "@/data/publicationsByTopic";
 
 const researchFieldsEn = [
   "International Trade",
@@ -97,6 +99,23 @@ const ResearchSection = () => {
             </ul>
           </motion.div>
         </div>
+
+        <motion.div {...fadeInUp} className="mt-12">
+          <h3 className="text-xs font-body font-semibold tracking-widest uppercase text-muted-foreground mb-4">
+            {t("Research themes", "研究テーマ別")}
+          </h3>
+          <div className="flex flex-wrap gap-2">
+            {researchThemes.map((topic) => (
+              <Link
+                key={topic.id}
+                to={`/research/${topicIdToSlug[topic.id]}`}
+                className="px-3 py-1.5 rounded text-sm font-body bg-secondary text-secondary-foreground border border-border hover:border-accent hover:text-accent transition-colors"
+              >
+                {lang === "ja" ? topic.nameJa : topic.nameEn}
+              </Link>
+            ))}
+          </div>
+        </motion.div>
       </div>
     </section>
   );
