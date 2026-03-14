@@ -1,17 +1,25 @@
 import { motion } from "framer-motion";
 import { useLanguage } from "@/contexts/LanguageContext";
 
-const selectedPublications = [
-  { authors: "Okazaki, T., Okubo, T. and Strobl, E.", year: 2025, title: "Large Fires and the Rise of Fire Insurance in Early Twentieth Century Japan", journal: "Journal of Economic History", detail: "85(3), 701–729" },
-  { authors: "Okazaki, T, Okubo, T and Strobl, E.", year: 2024, title: "The Bright and Dark Sides of a Central Bank's Financial Support to Local Banks after a Natural Disaster", journal: "Journal of Money, Credit, and Banking", detail: "56(6), 1439–1477" },
-  { authors: "Forslid, R and Okubo, T", year: 2023, title: "Trade, Location, and Multi-product Firms", journal: "Regional Science and Urban Economics", detail: "100, 103891" },
-  { authors: "Hoffmann, M and T. Okubo", year: 2022, title: "By a Silken Thread: Regional Banking Integration and Credit Reallocation during Japan's Lost Decade", journal: "Journal of International Economics", detail: "137, 103579" },
-  { authors: "Okubo, T, T. Okazaki and E. Tomiura", year: 2022, title: "Industrial Cluster Policy and Transaction Networks: Evidence from Firm-level Data in Japan", journal: "Canadian Journal of Economics", detail: "55(4), 1990–2035" },
-  { authors: "Okazaki, T. Okubo, T and Strobl, E", year: 2019, title: "Creative Destruction of Industries: Yokohama City in the Great Kanto Earthquake, 1923", journal: "Journal of Economic History", detail: "79(1), 1–31 (Lead article)" },
-  { authors: "Forslid, R., Okubo, T., and Ulltveit-Moe K-H", year: 2018, title: "Why Are Firms That Export Cleaner? International Trade, Abatement and Environmental Emissions", journal: "Journal of Environmental Economics and Management", detail: "91, 166–183" },
-  { authors: "Kato, H and Okubo, T", year: 2018, title: "Market Size in Globalization", journal: "Journal of International Economics", detail: "111, 34–60" },
-  { authors: "Okubo, T. Picard, P.M and Thisse, J-F", year: 2010, title: "The Spatial Selection of Heterogeneous Firms", journal: "Journal of International Economics", detail: "82(2), 230–237" },
-  { authors: "Baldwin, R.E., and Okubo, T.", year: 2006, title: "Heterogeneous Firms, Agglomeration and Economic Geography: Spatial Selection and Sorting", journal: "Journal of Economic Geography", detail: "6, 323–346" },
+const selectedPublications: {
+  authors: string;
+  year: number;
+  title: string;
+  journal: string;
+  detail: string;
+  doi?: string;
+  scholar_url?: string;
+}[] = [
+  { authors: "Okazaki, T., Okubo, T. and Strobl, E.", year: 2025, title: "Large Fires and the Rise of Fire Insurance in Early Twentieth Century Japan", journal: "Journal of Economic History", detail: "85(3), 701–729", doi: "10.1017/S0022050724000158" },
+  { authors: "Okazaki, T, Okubo, T and Strobl, E.", year: 2024, title: "The Bright and Dark Sides of a Central Bank's Financial Support to Local Banks after a Natural Disaster", journal: "Journal of Money, Credit, and Banking", detail: "56(6), 1439–1477", doi: "10.1111/jmcb.13141" },
+  { authors: "Forslid, R and Okubo, T", year: 2023, title: "Trade, Location, and Multi-product Firms", journal: "Regional Science and Urban Economics", detail: "100, 103891", doi: "10.1016/j.regsciurbeco.2023.103891" },
+  { authors: "Hoffmann, M and T. Okubo", year: 2022, title: "By a Silken Thread: Regional Banking Integration and Credit Reallocation during Japan's Lost Decade", journal: "Journal of International Economics", detail: "137, 103579", doi: "10.1016/j.jinteco.2022.103579" },
+  { authors: "Okubo, T, T. Okazaki and E. Tomiura", year: 2022, title: "Industrial Cluster Policy and Transaction Networks: Evidence from Firm-level Data in Japan", journal: "Canadian Journal of Economics", detail: "55(4), 1990–2035", doi: "10.1111/caje.12575" },
+  { authors: "Okazaki, T. Okubo, T and Strobl, E", year: 2019, title: "Creative Destruction of Industries: Yokohama City in the Great Kanto Earthquake, 1923", journal: "Journal of Economic History", detail: "79(1), 1–31 (Lead article)", doi: "10.1017/S0022050718000697" },
+  { authors: "Forslid, R., Okubo, T., and Ulltveit-Moe K-H", year: 2018, title: "Why Are Firms That Export Cleaner? International Trade, Abatement and Environmental Emissions", journal: "Journal of Environmental Economics and Management", detail: "91, 166–183", doi: "10.1016/j.jeem.2018.06.002" },
+  { authors: "Kato, H and Okubo, T", year: 2018, title: "Market Size in Globalization", journal: "Journal of International Economics", detail: "111, 34–60", doi: "10.1016/j.jinteco.2018.01.005" },
+  { authors: "Okubo, T. Picard, P.M and Thisse, J-F", year: 2010, title: "The Spatial Selection of Heterogeneous Firms", journal: "Journal of International Economics", detail: "82(2), 230–237", doi: "10.1016/j.jinteco.2009.10.005" },
+  { authors: "Baldwin, R.E., and Okubo, T.", year: 2006, title: "Heterogeneous Firms, Agglomeration and Economic Geography: Spatial Selection and Sorting", journal: "Journal of Economic Geography", detail: "6, 323–346", doi: "10.1093/jeg/lbi017" },
 ];
 
 const jaPublications = [
@@ -25,6 +33,12 @@ const fadeInUp = {
   viewport: { once: true },
   transition: { duration: 0.5 },
 };
+
+function doiLink(doi: string): string {
+  if (!doi) return "";
+  if (doi.startsWith("http")) return doi;
+  return `https://doi.org/${doi.replace(/^https:\/\/doi\.org\/?/i, "")}`;
+}
 
 const PublicationsSection = () => {
   const { lang, t } = useLanguage();
@@ -64,6 +78,32 @@ const PublicationsSection = () => {
                 <span className="italic text-foreground/70">{pub.journal}</span>
                 {pub.detail && <span className="text-muted-foreground">, {pub.detail}</span>}
               </p>
+              {(pub.doi || pub.scholar_url) && (
+                <p className="text-xs font-body mt-1 flex flex-wrap gap-3">
+                  {pub.doi && (
+                    <a
+                      href={doiLink(pub.doi)}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-accent hover:underline"
+                      aria-label="DOI"
+                    >
+                      DOI
+                    </a>
+                  )}
+                  {pub.scholar_url && (
+                    <a
+                      href={pub.scholar_url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-accent hover:underline"
+                      aria-label="Google Scholar"
+                    >
+                      Google Scholar
+                    </a>
+                  )}
+                </p>
+              )}
             </motion.article>
           ))}
         </div>

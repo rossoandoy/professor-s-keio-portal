@@ -17,6 +17,12 @@ const fadeInUp = {
   transition: { duration: 0.5 },
 };
 
+function doiLink(doi: string): string {
+  if (!doi) return "";
+  if (doi.startsWith("http")) return doi;
+  return `https://doi.org/${doi.replace(/^https:\/\/doi\.org\/?/i, "")}`;
+}
+
 const PublicationItem = ({ pub }: { pub: PublicationByTopic }) => (
   <article className="border-l-2 border-border hover:border-accent pl-4 py-2 transition-colors">
     <div className="flex items-baseline gap-2 mb-0.5">
@@ -28,6 +34,32 @@ const PublicationItem = ({ pub }: { pub: PublicationByTopic }) => (
       <span className="italic text-foreground/70">{pub.journal}</span>
       {pub.detail && <span className="text-muted-foreground">, {pub.detail}</span>}
     </p>
+    {(pub.doi || pub.scholar_url) && (
+      <p className="text-xs font-body mt-1 flex flex-wrap gap-3">
+        {pub.doi && (
+          <a
+            href={doiLink(pub.doi)}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-accent hover:underline"
+            aria-label="DOI"
+          >
+            DOI
+          </a>
+        )}
+        {pub.scholar_url && (
+          <a
+            href={pub.scholar_url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-accent hover:underline"
+            aria-label="Google Scholar"
+          >
+            Google Scholar
+          </a>
+        )}
+      </p>
+    )}
   </article>
 );
 

@@ -20,6 +20,8 @@ export interface PublicationByTopic {
   detail: string;
   topicIds: TopicId[];
   subtopic?: string;
+  doi?: string;
+  scholar_url?: string;
 }
 
 export const topics: Topic[] = [
@@ -141,6 +143,7 @@ export const publicationsByTopic: PublicationByTopic[] = [
     detail: "85(3), 701-729",
     topicIds: ["E"],
     subtopic: "Fire insurance",
+    doi: "10.1017/S0022050724000158",
   },
   {
     authors: "Okubo, T. and Noy, I.",
@@ -186,6 +189,7 @@ export const publicationsByTopic: PublicationByTopic[] = [
     detail: "56(6), 1439-1477",
     topicIds: ["E"],
     subtopic: "Great Kanto Earthquake",
+    doi: "10.1111/jmcb.13141",
   },
   {
     authors: "Okubo, T.",
@@ -222,6 +226,7 @@ export const publicationsByTopic: PublicationByTopic[] = [
     detail: "100, 103891",
     topicIds: ["B"],
     subtopic: "Economic geography with firm heterogeneity",
+    doi: "10.1016/j.regsciurbeco.2023.103891",
   },
   {
     authors: "Mohan, P., Okubo, T. and Strobl, E.",
