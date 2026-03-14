@@ -16,7 +16,7 @@ const Navigation = () => {
 
   const mainNavItems = [
     { label: t("Research", "研究"), to: "/#research" },
-    { label: t("CV", "CV"), to: "/cv" },
+    { label: t("Career", "経歴"), to: "/#career" },
     { label: t("Contact", "連絡先"), to: "/#contact" },
   ];
 
@@ -93,16 +93,13 @@ const Navigation = () => {
           animate={{ opacity: 1, height: "auto" }}
           className="md:hidden border-t border-border bg-background"
         >
-          {mainNavItems.map((item) => (
-            <Link
-              key={item.to}
-              to={item.to}
-              onClick={() => setOpen(false)}
-              className="block px-6 py-3 text-sm font-body text-muted-foreground hover:text-foreground hover:bg-muted transition-colors"
-            >
-              {item.label}
-            </Link>
-          ))}
+          <Link
+            to="/#research"
+            onClick={() => setOpen(false)}
+            className="block px-6 py-3 text-sm font-body text-muted-foreground hover:text-foreground hover:bg-muted transition-colors"
+          >
+            {t("Research", "研究")}
+          </Link>
           <div className="border-t border-border">
             <div className="px-6 py-2 text-xs font-body font-semibold text-muted-foreground uppercase tracking-wider">
               {t("Publications", "業績")}
@@ -122,6 +119,20 @@ const Navigation = () => {
               {t("By topic", "トピック別")}
             </Link>
           </div>
+          <Link
+            to="/#career"
+            onClick={() => setOpen(false)}
+            className="block px-6 py-3 text-sm font-body text-muted-foreground hover:text-foreground hover:bg-muted transition-colors border-t border-border"
+          >
+            {t("Career", "経歴")}
+          </Link>
+          <Link
+            to="/#contact"
+            onClick={() => setOpen(false)}
+            className="block px-6 py-3 text-sm font-body text-muted-foreground hover:text-foreground hover:bg-muted transition-colors"
+          >
+            {t("Contact", "連絡先")}
+          </Link>
         </motion.div>
       )}
     </nav>

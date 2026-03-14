@@ -74,6 +74,10 @@ Simply open [Lovable](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and 
    - 例: リポジトリが `professor-s-keio-portal` なら `https://rossoandoy.github.io/professor-s-keio-portal/`  
    - 親リポジトリ `okubo-hp` にソースを push している場合は `https://rossoandoy.github.io/okubo-hp/`
 
+### CV PDF
+
+CV ページの「Download CV (PDF)」は `public/cv.pdf` を参照します。最新の PDF（例: Okubo_CV 2026FebR.pdf）を `public/cv.pdf` として配置してください。親リポジトリに PDF がある場合はコピーして使います。
+
 ## Can I connect a custom domain to my Lovable project?
 
 Yes, you can!

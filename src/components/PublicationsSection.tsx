@@ -57,10 +57,10 @@ const PublicationsSection = () => {
             {t("By topic", "トピック別で見る")}
           </Link>
           <Link
-            to="/cv"
+            to="/by-topic"
             className="inline-flex items-center px-4 py-2 rounded-md text-sm font-body font-medium bg-secondary text-secondary-foreground border border-border hover:border-accent hover:text-accent transition-colors"
           >
-            {t("Search all (CV)", "全論文を検索")}
+            {t("Search all", "全論文を検索")}
           </Link>
         </motion.div>
 
