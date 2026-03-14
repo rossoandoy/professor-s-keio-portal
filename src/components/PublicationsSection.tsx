@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { getSelectedPublications } from "@/data/publicationsByTopic";
+import { scholarSearchUrl } from "@/utils/scholar";
 
 const jaPublications = [
   { authors: "大久保敏弘", year: 2024, title: "テレワークの経済学", journal: "日本経済新聞出版", detail: "" },
@@ -35,10 +36,33 @@ const PublicationsSection = () => {
         </motion.h2>
         <motion.p
           {...fadeInUp}
-          className="text-muted-foreground font-body text-sm mb-10"
+          className="text-muted-foreground font-body text-sm mb-3"
         >
           {t("70+ papers published in peer-reviewed international journals", "査読付き国際学術誌に70本以上の論文を発表")}
         </motion.p>
+        <motion.p
+          {...fadeInUp}
+          className="text-foreground font-body text-sm mb-4"
+        >
+          {t("View by topic or search all publications.", "トピック別に見る、または全論文を検索できます。")}
+        </motion.p>
+        <motion.div
+          {...fadeInUp}
+          className="flex flex-wrap gap-3 mb-10"
+        >
+          <Link
+            to="/by-topic"
+            className="inline-flex items-center px-4 py-2 rounded-md text-sm font-body font-medium bg-accent text-accent-foreground hover:opacity-90 transition-opacity border border-accent"
+          >
+            {t("By topic", "トピック別で見る")}
+          </Link>
+          <Link
+            to="/cv"
+            className="inline-flex items-center px-4 py-2 rounded-md text-sm font-body font-medium bg-secondary text-secondary-foreground border border-border hover:border-accent hover:text-accent transition-colors"
+          >
+            {t("Search all (CV)", "全論文を検索")}
+          </Link>
+        </motion.div>
 
         <div className="space-y-4">
           {getSelectedPublications().map((pub, i) => (
@@ -67,7 +91,7 @@ const PublicationsSection = () => {
                 <span className="italic text-foreground/70">{pub.journal}</span>
                 {pub.detail && <span className="text-muted-foreground">, {pub.detail}</span>}
               </p>
-              {(pub.doi || pub.scholar_url || pub.pdf_url || pub.preprint_url) && (
+              {(pub.doi || pub.scholar_url || pub.pdf_url || pub.preprint_url || pub.title) && (
                 <p className="text-xs font-body mt-1 flex flex-wrap gap-3">
                   {pub.doi && (
                     <a
@@ -80,17 +104,15 @@ const PublicationsSection = () => {
                       DOI
                     </a>
                   )}
-                  {pub.scholar_url && (
-                    <a
-                      href={pub.scholar_url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-accent hover:underline"
-                      aria-label="Google Scholar"
-                    >
-                      Google Scholar
-                    </a>
-                  )}
+                  <a
+                    href={pub.scholar_url || scholarSearchUrl(pub.title, pub.authors)}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-accent hover:underline"
+                    aria-label="Google Scholar"
+                  >
+                    Google Scholar
+                  </a>
                   {pub.pdf_url && (
                     <a href={pub.pdf_url} target="_blank" rel="noopener noreferrer" className="text-accent hover:underline" aria-label="PDF">
                       PDF

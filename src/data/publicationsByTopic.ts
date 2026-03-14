@@ -21,6 +21,7 @@ export interface PublicationByTopic {
   topicIds: TopicId[];
   subtopic?: string;
   doi?: string;
+  /** When absent, UI shows a Google Scholar search link built from title + authors. */
   scholar_url?: string;
   /** URL-safe id for detail page; assigned if missing */
   slug?: string;

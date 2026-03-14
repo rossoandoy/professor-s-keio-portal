@@ -4,6 +4,7 @@ import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import { getPublicationBySlug } from "@/data/publicationsByTopic";
 import type { PublicationByTopic } from "@/data/publicationsByTopic";
+import { scholarSearchUrl } from "@/utils/scholar";
 
 function doiLink(doi: string): string {
   if (!doi) return "";
@@ -74,16 +75,14 @@ const PublicationDetailContent = () => {
               DOI
             </a>
           )}
-          {pub.scholar_url && (
-            <a
-              href={pub.scholar_url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-accent hover:underline font-body text-sm"
-            >
-              Google Scholar
-            </a>
-          )}
+          <a
+            href={pub.scholar_url || scholarSearchUrl(pub.title, pub.authors)}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-accent hover:underline font-body text-sm"
+          >
+            Google Scholar
+          </a>
           {pub.pdf_url && (
             <a href={pub.pdf_url} target="_blank" rel="noopener noreferrer" className="text-accent hover:underline font-body text-sm">
               PDF

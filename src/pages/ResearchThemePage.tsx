@@ -4,6 +4,7 @@ import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { getTopicBySlug, getPublicationsForTopic } from "@/data/publicationsByTopic";
+import { scholarSearchUrl } from "@/utils/scholar";
 
 function doiLink(doi: string): string {
   if (!doi) return "";
@@ -72,18 +73,21 @@ const ResearchThemeContent = () => {
                 <span className="italic text-foreground/70">{pub.journal}</span>
                 {pub.detail && <span className="text-muted-foreground">, {pub.detail}</span>}
               </p>
-              {(pub.doi || pub.scholar_url) && (
+              {(pub.doi || pub.scholar_url || pub.title) && (
                 <p className="text-xs font-body mt-1 flex flex-wrap gap-3">
                   {pub.doi && (
                     <a href={doiLink(pub.doi)} target="_blank" rel="noopener noreferrer" className="text-accent hover:underline">
                       DOI
                     </a>
                   )}
-                  {pub.scholar_url && (
-                    <a href={pub.scholar_url} target="_blank" rel="noopener noreferrer" className="text-accent hover:underline">
-                      Google Scholar
-                    </a>
-                  )}
+                  <a
+                    href={pub.scholar_url || scholarSearchUrl(pub.title, pub.authors)}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-accent hover:underline"
+                  >
+                    Google Scholar
+                  </a>
                 </p>
               )}
             </article>

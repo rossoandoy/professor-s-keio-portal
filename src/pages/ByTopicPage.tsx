@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { LanguageProvider } from "@/contexts/LanguageContext";
 import Navigation from "@/components/Navigation";
@@ -10,6 +11,7 @@ import {
   type TopicId,
   type PublicationByTopic,
 } from "@/data/publicationsByTopic";
+import { scholarSearchUrl } from "@/utils/scholar";
 
 const fadeInUp = {
   initial: { opacity: 0, y: 20 },
@@ -43,18 +45,22 @@ const PublicationItem = ({ pub }: { pub: PublicationByTopic }) => (
       <span className="italic text-foreground/70">{pub.journal}</span>
       {pub.detail && <span className="text-muted-foreground">, {pub.detail}</span>}
     </p>
-    {(pub.doi || pub.scholar_url || pub.pdf_url || pub.preprint_url) && (
+    {(pub.doi || pub.scholar_url || pub.pdf_url || pub.preprint_url || pub.title) && (
       <p className="text-xs font-body mt-1 flex flex-wrap gap-3">
         {pub.doi && (
           <a href={doiLink(pub.doi)} target="_blank" rel="noopener noreferrer" className="text-accent hover:underline" aria-label="DOI">
             DOI
           </a>
         )}
-        {pub.scholar_url && (
-          <a href={pub.scholar_url} target="_blank" rel="noopener noreferrer" className="text-accent hover:underline" aria-label="Google Scholar">
-            Google Scholar
-          </a>
-        )}
+        <a
+          href={pub.scholar_url || scholarSearchUrl(pub.title, pub.authors)}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-accent hover:underline"
+          aria-label="Google Scholar"
+        >
+          Google Scholar
+        </a>
         {pub.pdf_url && (
           <a href={pub.pdf_url} target="_blank" rel="noopener noreferrer" className="text-accent hover:underline" aria-label="PDF">
             PDF
@@ -72,6 +78,13 @@ const PublicationItem = ({ pub }: { pub: PublicationByTopic }) => (
 
 const ByTopicContent = () => {
   const { lang, t } = useLanguage();
+  const [searchQuery, setSearchQuery] = useState("");
+
+  const q = searchQuery.trim().toLowerCase();
+  const topicMatches = (topic: (typeof topics)[0]) =>
+    (lang === "en" ? topic.nameEn : topic.nameJa).toLowerCase().includes(q);
+  const pubMatches = (p: PublicationByTopic) =>
+    [p.title, p.authors, p.journal].join(" ").toLowerCase().includes(q);
 
   return (
     <main className="min-h-screen bg-background">
@@ -84,7 +97,7 @@ const ByTopicContent = () => {
         </motion.h1>
         <motion.p
           {...fadeInUp}
-          className="text-muted-foreground font-body text-sm mb-12"
+          className="text-muted-foreground font-body text-sm mb-6"
         >
           {t(
             "Papers in refereed academic journals. Papers spanning multiple topics are listed under each relevant topic.",
@@ -92,10 +105,62 @@ const ByTopicContent = () => {
           )}
         </motion.p>
 
+        <motion.div {...fadeInUp} className="mb-6">
+          <label htmlFor="by-topic-search" className="sr-only">
+            {t("Search by topic, title, author, or journal", "トピック・タイトル・著者・誌名で検索")}
+          </label>
+          <input
+            id="by-topic-search"
+            type="search"
+            placeholder={t("Search by topic, title, author, journal...", "トピック・タイトル・著者・誌名で検索...")}
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="w-full max-w-md px-4 py-2 rounded-md border border-border bg-background text-foreground font-body text-sm placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-accent focus:border-accent"
+          />
+        </motion.div>
+
+        <motion.nav
+          {...fadeInUp}
+          aria-label={t("Topic list", "トピック一覧")}
+          className="mb-12 scroll-mt-24"
+        >
+          <h2 className="text-xs font-body font-semibold tracking-widest uppercase text-muted-foreground mb-2">
+            {t("Topics", "トピック")}
+          </h2>
+          <p className="text-muted-foreground font-body text-sm mb-4">
+            {t("Jump to a topic below.", "下のトピックをクリックして該当セクションへ移動。")}
+          </p>
+          <div className="flex flex-wrap gap-3 md:gap-4">
+            {topics
+              .filter((topic) => {
+                const pubs = getPublicationsForTopic(topic.id as TopicId);
+                if (pubs.length === 0) return false;
+                if (!q) return true;
+                return topicMatches(topic) || pubs.some(pubMatches);
+              })
+              .map((topic) => {
+                const name = lang === "en" ? topic.nameEn : topic.nameJa;
+                return (
+                  <a
+                    key={topic.id}
+                    href={`#topic-${topic.id}`}
+                    className="px-4 py-3 rounded-lg text-sm font-body font-medium bg-card text-foreground border-2 border-border hover:border-accent hover:text-accent shadow-sm transition-colors"
+                  >
+                    {name}
+                  </a>
+                );
+              })}
+          </div>
+        </motion.nav>
+
         <div className="space-y-14">
           {topics.map((topic, topicIndex) => {
-            const publications = getPublicationsForTopic(topic.id as TopicId);
-            if (publications.length === 0) return null;
+            const allPubs = getPublicationsForTopic(topic.id as TopicId);
+            const publications =
+              !q ? allPubs : topicMatches(topic) ? allPubs : allPubs.filter(pubMatches);
+            const topicVisible =
+              allPubs.length > 0 && (topicMatches(topic) || allPubs.some(pubMatches));
+            if (!topicVisible) return null;
 
             const name = lang === "en" ? topic.nameEn : topic.nameJa;
 
@@ -110,7 +175,7 @@ const ByTopicContent = () => {
               >
                 <h2
                   id={`topic-${topic.id}`}
-                  className="text-xl font-display font-bold text-foreground border-b border-border pb-2"
+                  className="text-xl font-display font-bold text-foreground border-b border-border pb-2 scroll-mt-24"
                 >
                   {name}
                 </h2>
