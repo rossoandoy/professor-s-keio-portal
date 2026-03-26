@@ -4,14 +4,19 @@ import { LanguageProvider } from "@/contexts/LanguageContext";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import { motion } from "framer-motion";
+import { Star } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import {
   topics,
   getPublicationsForTopic,
+  publicationCategories,
+  getCategory,
   type TopicId,
   type PublicationByTopic,
+  type PublicationCategory,
 } from "@/data/publicationsByTopic";
 import { scholarSearchUrl } from "@/utils/scholar";
+import { boldOkubo } from "@/utils/formatAuthors";
 
 const fadeInUp = {
   initial: { opacity: 0, y: 20 },
@@ -29,7 +34,10 @@ function doiLink(doi: string): string {
 const PublicationItem = ({ pub }: { pub: PublicationByTopic }) => (
   <article className="border-l-2 border-border hover:border-accent pl-4 py-2 transition-colors">
     <div className="flex items-baseline gap-2 mb-0.5">
-      <span className="text-xs font-body font-semibold text-accent shrink-0">{pub.year}</span>
+      <span className="text-xs font-body font-semibold text-accent shrink-0 flex items-center gap-1">
+        {pub.year}
+        {pub.top_journal && <><Star aria-hidden="true" className="w-3 h-3 fill-accent text-accent" /><span className="sr-only">Top journal</span></>}
+      </span>
       {pub.slug ? (
         <h3 className="text-sm font-display font-semibold text-foreground leading-snug">
           <Link to={`/publications/${pub.slug}`} className="text-foreground hover:text-accent hover:underline">
@@ -40,11 +48,16 @@ const PublicationItem = ({ pub }: { pub: PublicationByTopic }) => (
         <h3 className="text-sm font-display font-semibold text-foreground leading-snug">{pub.title}</h3>
       )}
     </div>
-    <p className="text-xs text-muted-foreground font-body">{pub.authors}</p>
+    <p className="text-xs text-muted-foreground font-body">{boldOkubo(pub.authors)}</p>
     <p className="text-xs font-body">
       <span className="italic text-foreground/70">{pub.journal}</span>
       {pub.detail && <span className="text-muted-foreground">, {pub.detail}</span>}
     </p>
+    {pub.contribution_summary && (
+      <p className="text-xs font-body text-muted-foreground/80 mt-0.5 italic">
+        {pub.contribution_summary}
+      </p>
+    )}
     {(pub.doi || pub.scholar_url || pub.pdf_url || pub.preprint_url || pub.title) && (
       <p className="text-xs font-body mt-1 flex flex-wrap gap-3">
         {pub.doi && (
@@ -76,15 +89,26 @@ const PublicationItem = ({ pub }: { pub: PublicationByTopic }) => (
   </article>
 );
 
+const categoryLabels: Record<PublicationCategory, { en: string; ja: string }> = {
+  Refereed: { en: "Journal Articles", ja: "査読付き論文" },
+  Books: { en: "Books & Chapters", ja: "著書・分担執筆" },
+  Policy: { en: "Policy Papers", ja: "政策論文" },
+  Japanese: { en: "Japanese Publications", ja: "日本語業績" },
+};
+
 const ByTopicContent = () => {
   const { lang, t } = useLanguage();
   const [searchQuery, setSearchQuery] = useState("");
+  const [categoryFilter, setCategoryFilter] = useState<PublicationCategory | "all">("all");
 
   const q = searchQuery.trim().toLowerCase();
   const topicMatches = (topic: (typeof topics)[0]) =>
     (lang === "en" ? topic.nameEn : topic.nameJa).toLowerCase().includes(q);
+  const catMatches = (p: PublicationByTopic) =>
+    categoryFilter === "all" || getCategory(p) === categoryFilter;
   const pubMatches = (p: PublicationByTopic) =>
-    [p.title, p.authors, p.journal].join(" ").toLowerCase().includes(q);
+    catMatches(p) &&
+    [p.title, p.authors, p.journal, p.contribution_summary ?? ""].join(" ").toLowerCase().includes(q);
 
   return (
     <main className="min-h-screen bg-background">
@@ -100,8 +124,8 @@ const ByTopicContent = () => {
           className="text-muted-foreground font-body text-sm mb-6"
         >
           {t(
-            "Papers in refereed academic journals. Papers spanning multiple topics are listed under each relevant topic.",
-            "査読付き学術誌論文。複数トピックにまたがる論文は該当する各トピックに掲載しています。"
+            "Publications organized by research topic. Use the category filter to narrow by type. Papers spanning multiple topics are listed under each.",
+            "研究トピック別の業績一覧。カテゴリフィルタで種別を絞り込めます。複数トピックにまたがる論文は各トピックに掲載。"
           )}
         </motion.p>
 
@@ -119,6 +143,37 @@ const ByTopicContent = () => {
           />
         </motion.div>
 
+        <motion.div {...fadeInUp} className="mb-6 flex flex-wrap gap-2">
+          <button
+            onClick={() => setCategoryFilter("all")}
+            aria-pressed={categoryFilter === "all"}
+            className={`px-3 py-1.5 rounded text-xs font-body border transition-colors ${
+              categoryFilter === "all"
+                ? "bg-accent text-accent-foreground border-accent"
+                : "bg-secondary text-secondary-foreground border-border hover:border-accent"
+            }`}
+          >
+            {t("All", "すべて")}
+          </button>
+          {publicationCategories.map((cat) => {
+            const label = categoryLabels[cat];
+            return (
+              <button
+                key={cat}
+                onClick={() => setCategoryFilter(cat)}
+                aria-pressed={categoryFilter === cat}
+                className={`px-3 py-1.5 rounded text-xs font-body border transition-colors ${
+                  categoryFilter === cat
+                    ? "bg-accent text-accent-foreground border-accent"
+                    : "bg-secondary text-secondary-foreground border-border hover:border-accent"
+                }`}
+              >
+                {lang === "en" ? label.en : label.ja}
+              </button>
+            );
+          })}
+        </motion.div>
+
         <motion.nav
           {...fadeInUp}
           aria-label={t("Topic list", "トピック一覧")}
@@ -133,7 +188,7 @@ const ByTopicContent = () => {
           <div className="flex flex-wrap gap-3 md:gap-4">
             {topics
               .filter((topic) => {
-                const pubs = getPublicationsForTopic(topic.id as TopicId);
+                const pubs = getPublicationsForTopic(topic.id as TopicId).filter(catMatches);
                 if (pubs.length === 0) return false;
                 if (!q) return true;
                 return topicMatches(topic) || pubs.some(pubMatches);
@@ -156,10 +211,11 @@ const ByTopicContent = () => {
         <div className="space-y-14">
           {topics.map((topic, topicIndex) => {
             const allPubs = getPublicationsForTopic(topic.id as TopicId);
+            const filteredPubs = allPubs.filter(catMatches);
             const publications =
-              !q ? allPubs : topicMatches(topic) ? allPubs : allPubs.filter(pubMatches);
+              !q ? filteredPubs : topicMatches(topic) ? filteredPubs : filteredPubs.filter(pubMatches);
             const topicVisible =
-              allPubs.length > 0 && (topicMatches(topic) || allPubs.some(pubMatches));
+              filteredPubs.length > 0 && (!q || topicMatches(topic) || filteredPubs.some(pubMatches));
             if (!topicVisible) return null;
 
             const name = lang === "en" ? topic.nameEn : topic.nameJa;

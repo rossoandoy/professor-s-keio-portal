@@ -57,9 +57,21 @@ const HeroSection = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="text-base font-body text-primary-foreground/60 mb-6"
+            className="text-base font-body text-primary-foreground/60 mb-4"
           >
             {t("Professor of Economics", "経済学部 教授")}
+          </motion.p>
+
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.25 }}
+            className="text-sm font-body text-primary-foreground/70 leading-relaxed mb-6 max-w-2xl"
+          >
+            {t(
+              "My research bridges spatial economics and globalization, examining how firms, trade, and geography interact under shocks — natural disasters, pandemics, and digitalization.",
+              "空間経済学とグローバル化の接点で、企業・貿易・地理が自然災害・パンデミック・デジタル化といったショック下でどう相互作用するかを研究しています。"
+            )}
           </motion.p>
 
           <motion.div

@@ -1,8 +1,10 @@
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
+import { Star } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { getSelectedPublications } from "@/data/publicationsByTopic";
 import { scholarSearchUrl } from "@/utils/scholar";
+import { boldOkubo } from "@/utils/formatAuthors";
 
 const jaPublications = [
   { authors: "大久保敏弘", year: 2024, title: "テレワークの経済学", journal: "日本経済新聞出版", detail: "" },
@@ -75,7 +77,10 @@ const PublicationsSection = () => {
               className="border-l-2 border-border hover:border-accent pl-4 py-2 transition-colors"
             >
               <div className="flex items-baseline gap-2 mb-0.5">
-                <span className="text-xs font-body font-semibold text-accent shrink-0">{pub.year}</span>
+                <span className="text-xs font-body font-semibold text-accent shrink-0 flex items-center gap-1">
+                  {pub.year}
+                  {pub.top_journal && <><Star aria-hidden="true" className="w-3 h-3 fill-accent text-accent" /><span className="sr-only">Top journal</span></>}
+                </span>
                 {pub.slug ? (
                   <h3 className="text-sm font-display font-semibold text-foreground leading-snug">
                     <Link to={`/publications/${pub.slug}`} className="text-foreground hover:text-accent hover:underline">
@@ -86,11 +91,16 @@ const PublicationsSection = () => {
                   <h3 className="text-sm font-display font-semibold text-foreground leading-snug">{pub.title}</h3>
                 )}
               </div>
-              <p className="text-xs text-muted-foreground font-body">{pub.authors}</p>
+              <p className="text-xs text-muted-foreground font-body">{boldOkubo(pub.authors)}</p>
               <p className="text-xs font-body">
                 <span className="italic text-foreground/70">{pub.journal}</span>
                 {pub.detail && <span className="text-muted-foreground">, {pub.detail}</span>}
               </p>
+              {pub.contribution_summary && (
+                <p className="text-xs font-body text-muted-foreground/80 mt-0.5 italic">
+                  {pub.contribution_summary}
+                </p>
+              )}
               {(pub.doi || pub.scholar_url || pub.pdf_url || pub.preprint_url || pub.title) && (
                 <p className="text-xs font-body mt-1 flex flex-wrap gap-3">
                   {pub.doi && (

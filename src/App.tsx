@@ -7,6 +7,9 @@ import Index from "./pages/Index";
 import ByTopicPage from "./pages/ByTopicPage";
 import PublicationDetailPage from "./pages/PublicationDetailPage";
 import ResearchThemePage from "./pages/ResearchThemePage";
+import ResearchAgendaPage from "./pages/ResearchAgendaPage";
+import PolicyPage from "./pages/PolicyPage";
+import NewsPage from "./pages/NewsPage";
 import SitemapPage from "./pages/SitemapPage";
 import NotFound from "./pages/NotFound";
 
@@ -22,6 +25,9 @@ const App = () => (
           <Route path="/" element={<Index />} />
           <Route path="/by-topic" element={<ByTopicPage />} />
           <Route path="/publications/:slug" element={<PublicationDetailPage />} />
+          <Route path="/research-agenda" element={<ResearchAgendaPage />} />
+          <Route path="/policy" element={<PolicyPage />} />
+          <Route path="/news" element={<NewsPage />} />
           <Route path="/research/:topicSlug" element={<ResearchThemePage />} />
           <Route path="/sitemap" element={<SitemapPage />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}

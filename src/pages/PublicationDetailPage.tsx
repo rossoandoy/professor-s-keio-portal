@@ -1,10 +1,12 @@
 import { useParams, Link } from "react-router-dom";
+import { Star } from "lucide-react";
 import { LanguageProvider } from "@/contexts/LanguageContext";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import { getPublicationBySlug } from "@/data/publicationsByTopic";
 import type { PublicationByTopic } from "@/data/publicationsByTopic";
 import { scholarSearchUrl } from "@/utils/scholar";
+import { boldOkubo } from "@/utils/formatAuthors";
 
 function doiLink(doi: string): string {
   if (!doi) return "";
@@ -45,12 +47,20 @@ const PublicationDetailContent = () => {
         <Link to="/#publications" className="text-sm text-accent hover:underline mb-6 inline-block">
           ← Selected Publications
         </Link>
-        <h1 className="text-2xl md:text-3xl font-display font-bold text-foreground mb-2">{pub.title}</h1>
-        <p className="text-muted-foreground font-body">{pub.authors}</p>
+        <h1 className="text-2xl md:text-3xl font-display font-bold text-foreground mb-2">
+          {pub.top_journal && <><Star aria-hidden="true" className="w-5 h-5 fill-accent text-accent inline mr-2 -mt-1" /><span className="sr-only">Top journal</span></>}
+          {pub.title}
+        </h1>
+        <p className="text-muted-foreground font-body">{boldOkubo(pub.authors)}</p>
         <p className="text-sm font-body text-foreground/80 mt-1">
           <span className="italic">{pub.journal}</span>
           {pub.detail && `, ${pub.detail}`} ({pub.year})
         </p>
+        {pub.contribution_summary && (
+          <p className="text-sm font-body text-muted-foreground/80 mt-2 italic">
+            {pub.contribution_summary}
+          </p>
+        )}
 
         {pub.abstract && (
           <div className="mt-8">

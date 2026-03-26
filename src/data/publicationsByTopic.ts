@@ -31,6 +31,10 @@ export interface PublicationByTopic {
   citation_count?: number;
   citation_source?: string;
   selected?: boolean;
+  contribution_summary?: string;
+  top_journal?: boolean;
+  /** Publication category. Defaults to "Refereed" if absent. */
+  category?: "Refereed" | "Books" | "Policy" | "Japanese";
 }
 
 export const topics: Topic[] = [
@@ -152,7 +156,9 @@ export const publicationsByTopic: PublicationByTopic[] = [
     detail: "85(3), 701-729",
     topicIds: ["E"],
     subtopic: "Fire insurance",
-    selected: true, doi: "10.1017/S0022050724000158"
+    selected: true, doi: "10.1017/S0022050724000158",
+    top_journal: true,
+    contribution_summary: "Uses historical city-level data to show how large fires drove the emergence and expansion of fire insurance markets in early 20th-century Japan."
   },
   {
     authors: "Okubo, T. and Noy, I",
@@ -198,8 +204,9 @@ export const publicationsByTopic: PublicationByTopic[] = [
     detail: "56(6), 1439-1477",
     topicIds: ["E"],
     subtopic: "Great Kanto Earthquake",
-    selected: true,
-    doi: "10.1111/jmcb.13141"
+    selected: true, doi: "10.1111/jmcb.13141",
+    top_journal: true,
+    contribution_summary: "Reveals how central bank lending to local banks after the 1923 Great Kanto Earthquake had both stabilizing and distortionary effects on regional credit allocation."
   },
   {
     authors: "Okubo, T.",
@@ -236,7 +243,8 @@ export const publicationsByTopic: PublicationByTopic[] = [
     detail: "100, 103891",
     topicIds: ["B"],
     subtopic: "Economic geography with firm heterogeneity",
-    selected: true, doi: "10.1016/j.regsciurbeco.2023.103891"
+    selected: true, doi: "10.1016/j.regsciurbeco.2023.103891",
+    contribution_summary: "Develops a multi-product firm model showing how trade liberalization reshapes the spatial distribution of firms across regions."
   },
   {
     authors: "Mohan, P. Okubo, T and Strobl, E.",
@@ -309,7 +317,9 @@ export const publicationsByTopic: PublicationByTopic[] = [
     detail: "137, 103579",
     topicIds: ["D", "G"],
     subtopic: "Regional banking market",
-    selected: true, doi: "10.1016/j.jinteco.2022.103579"
+    selected: true, doi: "10.1016/j.jinteco.2022.103579",
+    top_journal: true,
+    contribution_summary: "Demonstrates how regional banking integration affected credit reallocation across Japanese prefectures during the Lost Decade."
   },
   {
     authors: "Okubo, T, T. Okazaki and E. Tomiura",
@@ -319,7 +329,8 @@ export const publicationsByTopic: PublicationByTopic[] = [
     detail: "55(4), 1990-2035",
     topicIds: ["D"],
     subtopic: "Industrial cluster policies",
-    selected: true, doi: "10.1111/caje.12575"
+    selected: true, doi: "10.1111/caje.12575",
+    contribution_summary: "Uses firm-level transaction network data to evaluate the causal effects of Japan's industrial cluster policies on inter-firm linkages."
   },
   {
     authors: "Felbermayr, G., & Okubo, T.",
@@ -419,7 +430,9 @@ export const publicationsByTopic: PublicationByTopic[] = [
     detail: "79(1) pp.1-31. Lead article",
     topicIds: ["E", "G"],
     subtopic: "Great Kanto Earthquake",
-    selected: true, doi: "10.1017/S0022050718000697"
+    selected: true, doi: "10.1017/S0022050718000697",
+    top_journal: true,
+    contribution_summary: "Lead article. Shows how the 1923 Great Kanto Earthquake triggered creative destruction, reshaping Yokohama's industrial composition."
   },
   {
     authors: "Cole, M. A., Elliott, R. J., Okubo, T., and Strobl, E.",
@@ -447,7 +460,9 @@ export const publicationsByTopic: PublicationByTopic[] = [
     detail: "91, pp.166-183",
     topicIds: ["C"],
     subtopic: "Environment and trade",
-    selected: true, doi: "10.1016/j.jeem.2018.06.002"
+    selected: true, doi: "10.1016/j.jeem.2018.06.002",
+    top_journal: true,
+    contribution_summary: "Explains the cleaner-exporter puzzle: exporters invest more in abatement because they face larger market size, not because they are inherently greener."
   },
   {
     authors: "Kato, H and Okubo, T",
@@ -457,7 +472,9 @@ export const publicationsByTopic: PublicationByTopic[] = [
     detail: "111, 34-60",
     topicIds: ["A"],
     subtopic: "Trade",
-    selected: true, doi: "10.1016/j.jinteco.2018.01.005"
+    selected: true, doi: "10.1016/j.jinteco.2018.01.005",
+    top_journal: true,
+    contribution_summary: "Develops a theory of how domestic market size shapes trade patterns and FDI decisions under firm heterogeneity and trade costs."
   },
   {
     authors: "Forslid, F, Okubo, T. and Sanctuary, M.",
@@ -809,7 +826,9 @@ export const publicationsByTopic: PublicationByTopic[] = [
     detail: "pp.230-237",
     topicIds: ["B"],
     subtopic: "Economic geography with firm heterogeneity",
-    selected: true, doi: "10.1016/j.jinteco.2009.10.005"
+    selected: true, doi: "10.1016/j.jinteco.2009.10.005",
+    top_journal: true,
+    contribution_summary: "Introduces spatial sorting of heterogeneous firms into new economic geography, showing how productive firms select into larger regions."
   },
   {
     authors: "Cole, M.A., Elliott, R.J.R., and Okubo, T.",
@@ -990,4 +1009,13 @@ export function getSelectedPublications(): PublicationByTopic[] {
   const withFlag = publicationsByTopic.filter((p) => p.selected);
   const list = withFlag.length > 0 ? withFlag : [...publicationsByTopic].slice(0, 10);
   return [...list].sort((a, b) => b.year - a.year);
+}
+
+/** Available publication categories. */
+export const publicationCategories = ["Refereed", "Books", "Policy", "Japanese"] as const;
+export type PublicationCategory = (typeof publicationCategories)[number];
+
+/** Get effective category (defaults to "Refereed"). */
+export function getCategory(pub: PublicationByTopic): PublicationCategory {
+  return pub.category ?? "Refereed";
 }

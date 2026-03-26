@@ -31,7 +31,12 @@ const SitemapContent = () => {
               </li>
               <li>
                 <Link to="/#research" className="text-accent hover:underline">
-                  {t("Research", "研究")}
+                  {t("Research Themes", "研究テーマ")}
+                </Link>
+              </li>
+              <li>
+                <Link to="/research-agenda" className="text-accent hover:underline">
+                  {t("Research Agenda", "研究アジェンダ")}
                 </Link>
               </li>
               <li>
@@ -42,6 +47,16 @@ const SitemapContent = () => {
               <li>
                 <Link to="/#career" className="text-accent hover:underline">
                   {t("Career", "経歴")}
+                </Link>
+              </li>
+              <li>
+                <Link to="/policy" className="text-accent hover:underline">
+                  {t("Policy & Advisory", "政策・外部活動")}
+                </Link>
+              </li>
+              <li>
+                <Link to="/news" className="text-accent hover:underline">
+                  {t("News", "お知らせ")}
                 </Link>
               </li>
               <li>
