@@ -5,9 +5,9 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "vite build && node scripts/generate-sitemap.mjs",
     "build:dev": "vite build --mode development",
-    "build:keio": "vite build && node scripts/generate-keio-fallbacks.mjs",
+    "build:keio": "vite build && node scripts/generate-keio-fallbacks.mjs && node scripts/generate-sitemap.mjs",
     "check:paths": "node scripts/check-nonascii-paths.mjs",
     "check:links": "node scripts/check-internal-links.mjs",
     "lint": "eslint .",
