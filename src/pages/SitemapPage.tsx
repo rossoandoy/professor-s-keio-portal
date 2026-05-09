@@ -3,7 +3,9 @@ import { LanguageProvider } from "@/contexts/LanguageContext";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import { useLanguage } from "@/contexts/LanguageContext";
-import { topics, topicIdToSlug } from "@/data/publicationsByTopic";
+import { loadResearchTopics } from "@/lib/contentLoader";
+
+const { topics, topicIdToSlug } = loadResearchTopics();
 
 const SitemapContent = () => {
   const { lang, t } = useLanguage();

@@ -1,6 +1,9 @@
 import { motion } from "framer-motion";
 import { Mail, MapPin } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { loadHero } from "@/lib/contentLoader";
+
+const hero = loadHero();
 
 const HeroSection = () => {
   const { lang, t } = useLanguage();
@@ -19,7 +22,7 @@ const HeroSection = () => {
             transition={{ duration: 0.5 }}
             className="text-primary-foreground/50 font-body text-xs tracking-widest uppercase mb-3"
           >
-            {t("Keio University · Faculty of Economics", "慶應義塾大学 経済学部")}
+            {t(hero.affiliationEn, hero.affiliationJa)}
           </motion.p>
 
           <motion.h1
@@ -28,30 +31,17 @@ const HeroSection = () => {
             transition={{ duration: 0.6, delay: 0.1 }}
             className="text-4xl md:text-5xl font-display font-bold text-primary-foreground leading-tight mb-1"
           >
-            {lang === "en" ? "Toshihiro Okubo" : "大久保 敏弘"}
+            {lang === "en" ? hero.nameEn : hero.nameJa}
           </motion.h1>
 
-          {lang === "en" && (
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.15 }}
-              className="text-lg font-body text-primary-foreground/50 mb-1"
-            >
-              大久保 敏弘
-            </motion.p>
-          )}
-
-          {lang === "ja" && (
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.15 }}
-              className="text-lg font-body text-primary-foreground/50 mb-1"
-            >
-              Toshihiro Okubo
-            </motion.p>
-          )}
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.15 }}
+            className="text-lg font-body text-primary-foreground/50 mb-1"
+          >
+            {lang === "en" ? hero.nameJa : hero.nameEn}
+          </motion.p>
 
           <motion.p
             initial={{ opacity: 0, y: 20 }}
@@ -59,7 +49,7 @@ const HeroSection = () => {
             transition={{ duration: 0.6, delay: 0.2 }}
             className="text-base font-body text-primary-foreground/60 mb-4"
           >
-            {t("Professor of Economics", "経済学部 教授")}
+            {t(hero.titleEn, hero.titleJa)}
           </motion.p>
 
           <motion.p
@@ -68,10 +58,7 @@ const HeroSection = () => {
             transition={{ duration: 0.6, delay: 0.25 }}
             className="text-sm font-body text-primary-foreground/70 leading-relaxed mb-6 max-w-2xl"
           >
-            {t(
-              "My research bridges spatial economics and globalization, examining how firms, trade, and geography interact under shocks — natural disasters, pandemics, and digitalization.",
-              "空間経済学とグローバル化の接点で、企業・貿易・地理が自然災害・パンデミック・デジタル化といったショック下でどう相互作用するかを研究しています。"
-            )}
+            {t(hero.statementEn, hero.statementJa)}
           </motion.p>
 
           <motion.div
@@ -80,11 +67,11 @@ const HeroSection = () => {
             transition={{ duration: 0.6, delay: 0.3 }}
             className="flex flex-wrap gap-4 text-sm text-primary-foreground/60"
           >
-            <a href="mailto:okubo@econ.keio.ac.jp" className="flex items-center gap-1.5 hover:text-primary-foreground transition-colors">
-              <Mail className="w-4 h-4" /> okubo@econ.keio.ac.jp
+            <a href={`mailto:${hero.email}`} className="flex items-center gap-1.5 hover:text-primary-foreground transition-colors">
+              <Mail className="w-4 h-4" /> {hero.email}
             </a>
             <span className="flex items-center gap-1.5">
-              <MapPin className="w-4 h-4" /> {t("Mita, Minato-ku, Tokyo", "東京都港区三田")}
+              <MapPin className="w-4 h-4" /> {t(hero.locationEn, hero.locationJa)}
             </span>
           </motion.div>
         </div>

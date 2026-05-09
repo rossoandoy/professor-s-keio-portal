@@ -1,0 +1,95 @@
+{
+  "careerEn": [
+    {
+      "position": "Professor",
+      "period": "2015 – Present",
+      "institution": "Faculty of Economics, Keio University"
+    },
+    {
+      "position": "Associate Professor",
+      "period": "2011 – 2015",
+      "institution": "Faculty of Economics, Keio University"
+    },
+    {
+      "position": "Associate Professor",
+      "period": "2008 – 2011",
+      "institution": "RIEB, Kobe University"
+    },
+    {
+      "position": "Research Associate",
+      "period": "2006 – 2008",
+      "institution": "IPEG, University of Manchester"
+    }
+  ],
+  "careerJa": [
+    {
+      "position": "教授",
+      "period": "2015年 – 現在",
+      "institution": "慶應義塾大学 経済学部"
+    },
+    {
+      "position": "准教授",
+      "period": "2011 – 2015年",
+      "institution": "慶應義塾大学 経済学部"
+    },
+    {
+      "position": "准教授",
+      "period": "2008 – 2011年",
+      "institution": "神戸大学 経済経営研究所"
+    },
+    {
+      "position": "研究員",
+      "period": "2006 – 2008年",
+      "institution": "マンチェスター大学 IPEG"
+    },
+    {
+      "position": "博士研究員",
+      "period": "2005 – 2006年",
+      "institution": "ジュネーヴ高等国際問題研究所"
+    }
+  ],
+  "educationJa": [
+    {
+      "degree": "博士（国際関係学・経済学）",
+      "year": "2005年",
+      "institution": "ジュネーヴ高等国際問題研究所・ジュネーヴ大学",
+      "note": "指導教員: Richard E. Baldwin 教授"
+    },
+    {
+      "degree": "修士（経済学）",
+      "year": "2003年",
+      "institution": "ミシガン大学"
+    },
+    {
+      "degree": "修士（経済学）",
+      "year": "2000年",
+      "institution": "一橋大学"
+    },
+    {
+      "degree": "学士（経済学）",
+      "year": "1999年",
+      "institution": "一橋大学"
+    }
+  ],
+  "editorialService": [
+    {
+      "role": "Associate Editor",
+      "journal": "Journal of Regional Science",
+      "period": "2010 – Present"
+    },
+    {
+      "role": "Editorial Board",
+      "journal": "Review of Urban and Regional Development Studies",
+      "period": "2017 – 2019"
+    }
+  ],
+  "visitingPositions": [
+    "Stockholm University (2023)",
+    "University of Zurich (2023, 2014, 2010–)",
+    "University of Birmingham (2022)",
+    "Kyoto University (2019–2020)",
+    "University of Tokyo / CREPE (2020–)",
+    "Oxford University (2010)",
+    "CORE, UCLouvain (2011, 2009)"
+  ]
+}

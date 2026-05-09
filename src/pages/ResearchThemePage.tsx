@@ -3,7 +3,7 @@ import { LanguageProvider } from "@/contexts/LanguageContext";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import { useLanguage } from "@/contexts/LanguageContext";
-import { getTopicBySlug, getPublicationsForTopic } from "@/data/publicationsByTopic";
+import { getTopicBySlug, getPublicationsForTopic } from "@/lib/contentLoader";
 import { scholarSearchUrl } from "@/utils/scholar";
 
 function doiLink(doi: string): string {

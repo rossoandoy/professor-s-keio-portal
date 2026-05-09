@@ -1,0 +1,200 @@
+media: public/images
+
+content:
+  # === Collections (multiple files) ===
+
+  - name: news
+    label: "News / お知らせ"
+    type: collection
+    path: content/news
+    format: yaml-frontmatter
+    filename: "{fields.date}-{fields.slug}"
+    fields:
+      - { name: title_en, label: "Title (EN)", type: string }
+      - { name: title_ja, label: "タイトル (JA)", type: string }
+      - { name: date, label: "Date", type: date }
+      - { name: slug, label: "Slug (URL)", type: string }
+      - { name: tags, label: "Tags", type: string, list: true }
+
+  - name: publications
+    label: "Publications / 業績"
+    type: collection
+    path: content/publications
+    format: yaml-frontmatter
+    filename: "{fields.slug}"
+    fields:
+      - { name: title, label: "Title", type: string }
+      - { name: authors, label: "Authors (APA format)", type: string }
+      - { name: year, label: "Year", type: number }
+      - { name: journal, label: "Journal", type: string }
+      - { name: detail, label: "Volume/Pages", type: string }
+      - { name: slug, label: "Slug (URL)", type: string }
+      - { name: doi, label: "DOI", type: string }
+      - { name: scholar_url, label: "Google Scholar URL", type: string }
+      - { name: topic_ids, label: "Topic IDs (A-G)", type: string, list: true }
+      - { name: subtopic, label: "Subtopic", type: string }
+      - { name: category, label: "Category", type: select, options: ["Refereed", "Books", "Policy", "Japanese"] }
+      - { name: selected, label: "Show in Selected", type: boolean }
+      - { name: top_journal, label: "Top Journal", type: boolean }
+      - { name: contribution_summary, label: "Contribution Summary", type: string }
+      - { name: abstract, label: "Abstract", type: text }
+      - { name: pdf_url, label: "PDF URL", type: string }
+      - { name: preprint_url, label: "Preprint URL", type: string }
+
+  # === Single files (pages & settings) ===
+
+  - name: hero
+    label: "Hero Section"
+    type: file
+    path: content/settings/hero.json
+    fields:
+      - { name: nameEn, label: "Name (EN)", type: string }
+      - { name: nameJa, label: "名前 (JA)", type: string }
+      - { name: titleEn, label: "Title (EN)", type: string }
+      - { name: titleJa, label: "肩書 (JA)", type: string }
+      - { name: affiliationEn, label: "Affiliation (EN)", type: string }
+      - { name: affiliationJa, label: "所属 (JA)", type: string }
+      - { name: statementEn, label: "Research Statement (EN)", type: text }
+      - { name: statementJa, label: "研究ステートメント (JA)", type: text }
+      - { name: email, label: "Email", type: string }
+      - { name: locationEn, label: "Location (EN)", type: string }
+      - { name: locationJa, label: "所在地 (JA)", type: string }
+
+  - name: contact
+    label: "Contact / 連絡先"
+    type: file
+    path: content/settings/contact.json
+    fields:
+      - { name: email, label: "Email", type: string }
+      - { name: phone, label: "Phone", type: string }
+      - { name: addressEn, label: "Address (EN)", type: string }
+      - { name: addressJa, label: "住所 (JA)", type: string }
+      - { name: institutionEn, label: "Institution (EN)", type: string }
+      - { name: institutionJa, label: "所属 (JA)", type: string }
+      - name: externalLinks
+        label: "External Links"
+        type: object
+        list: true
+        fields:
+          - { name: label, label: "Label", type: string }
+          - { name: url, label: "URL", type: string }
+
+  - name: navigation
+    label: "Navigation"
+    type: file
+    path: content/settings/navigation.json
+    fields:
+      - name: items
+        label: "Menu Items"
+        type: object
+        list: true
+        fields:
+          - { name: labelEn, label: "Label (EN)", type: string }
+          - { name: labelJa, label: "ラベル (JA)", type: string }
+          - { name: to, label: "Link", type: string }
+          - name: children
+            label: "Sub-items"
+            type: object
+            list: true
+            fields:
+              - { name: labelEn, label: "Label (EN)", type: string }
+              - { name: labelJa, label: "ラベル (JA)", type: string }
+              - { name: to, label: "Link", type: string }
+
+  - name: research-agenda
+    label: "Research Agenda"
+    type: file
+    path: content/pages/research-agenda.json
+    fields:
+      - name: sections
+        label: "Sections"
+        type: object
+        list: true
+        fields:
+          - { name: id, label: "ID", type: string }
+          - { name: titleEn, label: "Title (EN)", type: string }
+          - { name: titleJa, label: "タイトル (JA)", type: string }
+          - { name: bodyEn, label: "Body (EN)", type: text }
+          - { name: bodyJa, label: "本文 (JA)", type: text }
+
+  - name: career
+    label: "Career / 経歴"
+    type: file
+    path: content/pages/career.json
+    fields:
+      - name: careerEn
+        label: "Career (EN)"
+        type: object
+        list: true
+        fields:
+          - { name: position, label: "Position", type: string }
+          - { name: period, label: "Period", type: string }
+          - { name: institution, label: "Institution", type: string }
+      - name: careerJa
+        label: "経歴 (JA)"
+        type: object
+        list: true
+        fields:
+          - { name: position, label: "職位", type: string }
+          - { name: period, label: "期間", type: string }
+          - { name: institution, label: "所属", type: string }
+      - name: educationJa
+        label: "学歴 (JA only)"
+        type: object
+        list: true
+        fields:
+          - { name: degree, label: "学位", type: string }
+          - { name: year, label: "年", type: string }
+          - { name: institution, label: "大学", type: string }
+          - { name: note, label: "備考", type: string }
+      - name: editorialService
+        label: "Editorial Service"
+        type: object
+        list: true
+        fields:
+          - { name: role, label: "Role", type: string }
+          - { name: journal, label: "Journal", type: string }
+          - { name: period, label: "Period", type: string }
+      - name: visitingPositions
+        label: "Visiting Positions"
+        type: string
+        list: true
+
+  - name: policy
+    label: "Policy & Advisory"
+    type: file
+    path: content/pages/policy.json
+    fields:
+      - name: roles
+        label: "Roles"
+        type: object
+        list: true
+        fields:
+          - { name: orgEn, label: "Organization (EN)", type: string }
+          - { name: orgJa, label: "組織 (JA)", type: string }
+          - { name: roleEn, label: "Role (EN)", type: string }
+          - { name: roleJa, label: "役割 (JA)", type: string }
+          - { name: detailEn, label: "Detail (EN)", type: string }
+          - { name: detailJa, label: "詳細 (JA)", type: string }
+          - { name: category, label: "Category", type: select, options: ["Government", "Research Institute", "Academic"] }
+
+  - name: research-topics
+    label: "Research Topics"
+    type: file
+    path: content/pages/research-topics.json
+    fields:
+      - name: topics
+        label: "Topics"
+        type: object
+        list: true
+        fields:
+          - { name: id, label: "ID (A-G)", type: string }
+          - { name: nameEn, label: "Name (EN)", type: string }
+          - { name: nameJa, label: "名前 (JA)", type: string }
+          - name: subtopics
+            label: "Subtopics"
+            type: object
+            list: true
+            fields:
+              - { name: labelEn, label: "Label (EN)", type: string }
+              - { name: labelJa, label: "ラベル (JA)", type: string }

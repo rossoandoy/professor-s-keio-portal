@@ -1,0 +1,12 @@
+{
+  "email": "okubo@econ.keio.ac.jp",
+  "phone": "+81-3-5418-6589",
+  "addressEn": "2-15-45 Mita, Minato-ku, Tokyo 108-8345, Japan",
+  "addressJa": "〒108-8345 東京都港区三田2-15-45",
+  "institutionEn": "Faculty of Economics, Keio University",
+  "institutionJa": "慶應義塾大学 経済学部",
+  "externalLinks": [
+    { "label": "Google Scholar", "url": "https://scholar.google.com" },
+    { "label": "Scopus", "url": "https://www.scopus.com" }
+  ]
+}

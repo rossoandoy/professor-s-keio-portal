@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Star } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
-import { getSelectedPublications } from "@/data/publicationsByTopic";
+import { getSelectedPublications } from "@/lib/contentLoader";
 import { scholarSearchUrl } from "@/utils/scholar";
 import { boldOkubo } from "@/utils/formatAuthors";
 

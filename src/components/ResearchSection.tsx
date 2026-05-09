@@ -1,7 +1,9 @@
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useLanguage } from "@/contexts/LanguageContext";
-import { topics as researchThemes, topicIdToSlug } from "@/data/publicationsByTopic";
+import { loadResearchTopics, type TopicId } from "@/lib/contentLoader";
+
+const { topics: researchThemes, topicIdToSlug } = loadResearchTopics();
 
 const researchFieldsEn = [
   "International Trade",

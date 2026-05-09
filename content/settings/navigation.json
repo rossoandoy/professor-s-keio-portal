@@ -1,0 +1,43 @@
+{
+  "items": [
+    {
+      "labelEn": "Research",
+      "labelJa": "研究",
+      "to": "",
+      "children": [
+        { "labelEn": "Research Themes", "labelJa": "研究テーマ", "to": "/#research" },
+        { "labelEn": "Research Agenda", "labelJa": "研究アジェンダ", "to": "/research-agenda" }
+      ]
+    },
+    {
+      "labelEn": "Publications",
+      "labelJa": "業績",
+      "to": "",
+      "children": [
+        { "labelEn": "Selected", "labelJa": "代表作", "to": "/#publications" },
+        { "labelEn": "By Topic", "labelJa": "トピック別", "to": "/by-topic" }
+      ]
+    },
+    {
+      "labelEn": "About",
+      "labelJa": "概要",
+      "to": "",
+      "children": [
+        { "labelEn": "Career", "labelJa": "経歴", "to": "/#career" },
+        { "labelEn": "Policy & Advisory", "labelJa": "政策・外部活動", "to": "/policy" }
+      ]
+    },
+    {
+      "labelEn": "News",
+      "labelJa": "お知らせ",
+      "to": "/news",
+      "children": []
+    },
+    {
+      "labelEn": "Contact",
+      "labelJa": "連絡先",
+      "to": "/#contact",
+      "children": []
+    }
+  ]
+}

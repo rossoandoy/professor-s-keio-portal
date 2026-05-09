@@ -3,8 +3,7 @@ import { Star } from "lucide-react";
 import { LanguageProvider } from "@/contexts/LanguageContext";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
-import { getPublicationBySlug } from "@/data/publicationsByTopic";
-import type { PublicationByTopic } from "@/data/publicationsByTopic";
+import { getPublicationBySlug, type Publication as PublicationByTopic } from "@/lib/contentLoader";
 import { scholarSearchUrl } from "@/utils/scholar";
 import { boldOkubo } from "@/utils/formatAuthors";
 

@@ -1,0 +1,156 @@
+{
+  "topics": [
+    {
+      "id": "A",
+      "nameEn": "International trade, FDI and Globalization",
+      "nameJa": "国際貿易・FDI・グローバル化"
+    },
+    {
+      "id": "B",
+      "nameEn": "Trade, Space and economic geography",
+      "nameJa": "貿易・空間・経済地理",
+      "subtopics": [
+        {
+          "labelEn": "Economic geography with firm heterogeneity",
+          "labelJa": "企業異質性と経済地理"
+        }
+      ]
+    },
+    {
+      "id": "C",
+      "nameEn": "Trade, Energy and Environment",
+      "nameJa": "貿易・エネルギー・環境",
+      "subtopics": [
+        {
+          "labelEn": "Environment and trade",
+          "labelJa": "環境と貿易"
+        },
+        {
+          "labelEn": "Pollution Haven",
+          "labelJa": "汚染の楽園"
+        },
+        {
+          "labelEn": "Energy",
+          "labelJa": "エネルギー"
+        }
+      ]
+    },
+    {
+      "id": "D",
+      "nameEn": "Regional Economy and public policy",
+      "nameJa": "地域経済と公共政策",
+      "subtopics": [
+        {
+          "labelEn": "Regional banking market",
+          "labelJa": "地域金融市場"
+        },
+        {
+          "labelEn": "Industrial cluster policies",
+          "labelJa": "産業クラスター政策"
+        },
+        {
+          "labelEn": "Regional economy",
+          "labelJa": "地域経済"
+        }
+      ]
+    },
+    {
+      "id": "E",
+      "nameEn": "Natural Disaster and Regional Economy",
+      "nameJa": "自然災害と地域経済",
+      "subtopics": [
+        {
+          "labelEn": "Noto Earthquake",
+          "labelJa": "能登半島地震"
+        },
+        {
+          "labelEn": "Fire insurance",
+          "labelJa": "火災保険"
+        },
+        {
+          "labelEn": "Disaster and social capital",
+          "labelJa": "災害とソーシャルキャピタル"
+        },
+        {
+          "labelEn": "Great Kanto Earthquake",
+          "labelJa": "関東大震災"
+        },
+        {
+          "labelEn": "Spanish flu",
+          "labelJa": "スペインかぜ"
+        },
+        {
+          "labelEn": "Technology destruction",
+          "labelJa": "技術破壊"
+        },
+        {
+          "labelEn": "Covid-19",
+          "labelJa": "COVID-19"
+        },
+        {
+          "labelEn": "Great East Japan Earthquake",
+          "labelJa": "東日本大震災"
+        },
+        {
+          "labelEn": "Kobe Earthquake",
+          "labelJa": "阪神・淡路大震災"
+        },
+        {
+          "labelEn": "Ise-bay typhoon",
+          "labelJa": "伊勢湾台風"
+        },
+        {
+          "labelEn": "Vaccination",
+          "labelJa": "ワクチン接種"
+        }
+      ]
+    },
+    {
+      "id": "F",
+      "nameEn": "Digital Economy",
+      "nameJa": "デジタル経済",
+      "subtopics": [
+        {
+          "labelEn": "Telework",
+          "labelJa": "テレワーク"
+        }
+      ]
+    },
+    {
+      "id": "G",
+      "nameEn": "Quantitative History in Japan",
+      "nameJa": "日本における計量経済史",
+      "subtopics": [
+        {
+          "labelEn": "Regional banking market",
+          "labelJa": "地域金融市場"
+        },
+        {
+          "labelEn": "Spanish flu",
+          "labelJa": "スペインかぜ"
+        },
+        {
+          "labelEn": "Great Kanto Earthquake",
+          "labelJa": "関東大震災"
+        },
+        {
+          "labelEn": "Ise-bay typhoon",
+          "labelJa": "伊勢湾台風"
+        },
+        {
+          "labelEn": "Gravity model and history",
+          "labelJa": "重力モデルと歴史"
+        }
+      ]
+    }
+  ],
+  "topicIdToSlug": {
+    "A": "international-trade-fdi-globalization",
+    "B": "trade-space-economic-geography",
+    "C": "trade-energy-environment",
+    "D": "regional-economy-public-policy",
+    "E": "natural-disaster-regional-economy",
+    "F": "digital-economy",
+    "G": "quantitative-history-japan"
+  }
+}

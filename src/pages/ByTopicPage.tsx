@@ -7,14 +7,16 @@ import { motion } from "framer-motion";
 import { Star } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import {
-  topics,
+  loadResearchTopics,
   getPublicationsForTopic,
   publicationCategories,
   getCategory,
   type TopicId,
-  type PublicationByTopic,
+  type Publication as PublicationByTopic,
   type PublicationCategory,
-} from "@/data/publicationsByTopic";
+} from "@/lib/contentLoader";
+
+const { topics } = loadResearchTopics();
 import { scholarSearchUrl } from "@/utils/scholar";
 import { boldOkubo } from "@/utils/formatAuthors";
 

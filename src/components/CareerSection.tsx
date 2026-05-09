@@ -1,13 +1,14 @@
 import { motion } from "framer-motion";
 import { useLanguage } from "@/contexts/LanguageContext";
-import {
-  careerEn,
-  careerJa,
-  educationJa,
-  editorialService,
-  governmentCommittees,
-  visitingPositions,
-} from "@/data/cvContent";
+import { loadCareer, loadPolicyRoles } from "@/lib/contentLoader";
+
+const careerData = loadCareer();
+const { careerEn, careerJa, educationJa, editorialService, visitingPositions } = careerData;
+const policyRoles = loadPolicyRoles();
+// Map policy roles to the old governmentCommittees format for JA display
+const governmentCommittees = policyRoles
+  .filter((r) => r.category === "Government")
+  .map((r) => ({ role: r.roleJa, org: r.orgJa, detail: r.detailJa }));
 
 const fadeInUp = {
   initial: { opacity: 0, y: 20 },

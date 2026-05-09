@@ -3,7 +3,9 @@ import { LanguageProvider } from "@/contexts/LanguageContext";
 import { useLanguage } from "@/contexts/LanguageContext";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
-import { getAllNews } from "@/data/news";
+import { loadNews } from "@/lib/contentLoader";
+
+const getAllNews = loadNews;
 
 const fadeInUp = {
   initial: { opacity: 0, y: 20 },

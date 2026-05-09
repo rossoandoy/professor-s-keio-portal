@@ -4,7 +4,9 @@ import { LanguageProvider } from "@/contexts/LanguageContext";
 import { useLanguage } from "@/contexts/LanguageContext";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
-import { researchAgendaSections } from "@/data/researchAgenda";
+import { loadResearchAgenda } from "@/lib/contentLoader";
+
+const researchAgendaSections = loadResearchAgenda();
 
 const fadeInUp = {
   initial: { opacity: 0, y: 20 },

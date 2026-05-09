@@ -1,6 +1,9 @@
 import { motion } from "framer-motion";
 import { Mail, MapPin, Phone, ExternalLink } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { loadContact } from "@/lib/contentLoader";
+
+const contact = loadContact();
 
 const fadeInUp = {
   initial: { opacity: 0, y: 20 },
@@ -31,37 +34,44 @@ const ContactSection = () => {
             <MapPin className="w-4 h-4 text-accent mt-0.5 shrink-0" />
             <div>
               <p className="font-body text-sm text-foreground">
-                {t("Faculty of Economics, Keio University", "慶應義塾大学 経済学部")}
+                {t(contact.institutionEn, contact.institutionJa)}
               </p>
               <p className="text-xs text-muted-foreground font-body">
-                {t("2-15-45 Mita, Minato-ku, Tokyo 108-8345, Japan", "〒108-8345 東京都港区三田2-15-45")}
+                {t(contact.addressEn, contact.addressJa)}
               </p>
             </div>
           </div>
 
           <div className="flex items-center gap-3">
             <Mail className="w-4 h-4 text-accent shrink-0" />
-            <a href="mailto:okubo@econ.keio.ac.jp" className="font-body text-sm text-foreground hover:text-accent transition-colors">
-              okubo@econ.keio.ac.jp
+            <a href={`mailto:${contact.email}`} className="font-body text-sm text-foreground hover:text-accent transition-colors">
+              {contact.email}
             </a>
           </div>
 
           <div className="flex items-center gap-3">
             <Phone className="w-4 h-4 text-accent shrink-0" />
-            <span className="font-body text-sm text-foreground">+81-3-5418-6589</span>
+            <span className="font-body text-sm text-foreground">{contact.phone}</span>
           </div>
 
-          <div className="flex items-center gap-3 pt-2">
-            <ExternalLink className="w-4 h-4 text-accent shrink-0" />
-            <div className="flex gap-4">
-              <a href="https://scholar.google.com" target="_blank" rel="noopener noreferrer" className="text-xs font-body text-muted-foreground hover:text-foreground transition-colors underline underline-offset-2">
-                Google Scholar
-              </a>
-              <a href="https://www.scopus.com" target="_blank" rel="noopener noreferrer" className="text-xs font-body text-muted-foreground hover:text-foreground transition-colors underline underline-offset-2">
-                Scopus
-              </a>
+          {contact.externalLinks.length > 0 && (
+            <div className="flex items-center gap-3 pt-2">
+              <ExternalLink className="w-4 h-4 text-accent shrink-0" />
+              <div className="flex gap-4">
+                {contact.externalLinks.map((link) => (
+                  <a
+                    key={link.label}
+                    href={link.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-xs font-body text-muted-foreground hover:text-foreground transition-colors underline underline-offset-2"
+                  >
+                    {link.label}
+                  </a>
+                ))}
+              </div>
             </div>
-          </div>
+          )}
         </motion.div>
       </div>
     </section>

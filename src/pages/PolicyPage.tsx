@@ -4,7 +4,10 @@ import { LanguageProvider } from "@/contexts/LanguageContext";
 import { useLanguage } from "@/contexts/LanguageContext";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
-import { policyRoles, editorialService, type PolicyRole } from "@/data/cvContent";
+import { loadPolicyRoles, loadCareer, type PolicyRole } from "@/lib/contentLoader";
+
+const policyRoles = loadPolicyRoles();
+const { editorialService } = loadCareer();
 
 const fadeInUp = {
   initial: { opacity: 0, y: 20 },
