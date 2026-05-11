@@ -1,87 +1,93 @@
-# Welcome to your Lovable project
+# Professor Toshihiro Okubo — Keio Portal
 
-## Project info
+大久保敏弘教授（慶應義塾大学 経済学部）の研究ポータルサイト。
 
-**URL**: https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID
+**公開 URL**: https://rossoandoy.github.io/professor-s-keio-portal/
 
-## How can I edit this code?
+---
 
-There are several ways of editing your application.
+## 技術スタック
 
-**Use Lovable**
+- React 18 + TypeScript + Vite 5 (SWC)
+- Tailwind CSS 3 + shadcn/ui (Radix UI)
+- React Router v6 / TanStack React Query / Framer Motion
+- テスト: Vitest + Testing Library
+- CMS: [Pages CMS](https://pagescms.org) (外部サービス、`.pages.yml` で設定)
+- CI/CD: GitHub Actions → GitHub Pages 自動デプロイ
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and start prompting.
+## 開発
 
-Changes made via Lovable will be committed automatically to this repo.
-
-**Use your preferred IDE**
-
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
-
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
-
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
+```bash
+npm ci          # 依存関係インストール
+npm run dev     # 開発サーバー (localhost:8080)
+npm run build   # 本番ビルド → dist/ + sitemap.xml 生成
+npm run lint    # ESLint
+npm run test    # Vitest
 ```
 
-**Edit a file directly in GitHub**
+## ビルド (慶應サーバー向け)
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+```bash
+npm run build:keio   # ビルド + SPA fallback生成 + sitemap.xml
+```
 
-**Use GitHub Codespaces**
+慶應サーバー (`public_html`) は SPA リライトに対応していないため、`scripts/generate-keio-fallbacks.mjs` が全ルートに `index.html` をコピーする。ビルド成果物は `dist/` に出力される。
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+## コンテンツ管理
 
-## What technologies are used for this project?
+コンテンツは `content/` ディレクトリに格納され、ビルド時に Vite glob import で読み込まれる。
 
-This project is built with:
+```
+content/
+  publications/   # 論文 (Markdown frontmatter, 89件)
+  news/           # お知らせ (Markdown frontmatter)
+  pages/          # Career, Policy, Research Topics, Research Agenda (JSON)
+  settings/       # Hero, Contact, Navigation (JSON)
+```
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+### Pages CMS でブラウザから編集
 
-## How can I deploy this project?
+1. [pagescms.org](https://pagescms.org) にアクセス → GitHub ログイン
+2. `professor-s-keio-portal` を選択
+3. Publications / News / Hero / Contact 等を編集 → Save
 
-Simply open [Lovable](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and click on Share -> Publish.
+詳細: [docs/CMS_GUIDE.md](docs/CMS_GUIDE.md)
 
-### GitHub Pages でプレビューする
+## デプロイ
 
-1. このリポジトリを GitHub に push する（または親リポジトリ [okubo-hp](https://github.com/rossoandoy/okubo-hp) に push する）。
-2. リポジトリの **Settings → Pages** を開く。
-3. **Source** で **GitHub Actions** を選ぶ。
-4. `main` に push すると `.github/workflows/deploy-pages.yml` が動き、ビルド結果が GitHub Pages にデプロイされる。
-5. 公開 URL: `https://<ユーザー名>.github.io/<リポジトリ名>/`  
-   - 例: リポジトリが `professor-s-keio-portal` なら `https://rossoandoy.github.io/professor-s-keio-portal/`  
-   - 親リポジトリ `okubo-hp` にソースを push している場合は `https://rossoandoy.github.io/okubo-hp/`
+### GitHub Pages (自動)
 
-### CV PDF
+`main` に push すると GitHub Actions が自動でビルド・デプロイ。
 
-CV ページの「Download CV (PDF)」は `public/cv.pdf` を参照します。最新の PDF（例: Okubo_CV 2026FebR.pdf）を `public/cv.pdf` として配置してください。親リポジトリに PDF がある場合はコピーして使います。
+- `.github/workflows/deploy-pages.yml` — ビルド + GitHub Pages デプロイ
+- `.github/workflows/build-release.yml` — ビルド + 成果物 ZIP 生成
+- `.github/workflows/pr-check.yml` — PR 時の品質チェック
 
-## Can I connect a custom domain to my Lovable project?
+### 慶應サーバー (手動)
 
-Yes, you can!
+1. `npm run build:keio` または GitHub Actions の成果物 ZIP をダウンロード
+2. `dist/` の中身を Cyberduck で `public_html` にアップロード
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+## プロジェクト構成
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+```
+src/
+  App.tsx              # ルート定義
+  components/          # セクション・UI コンポーネント
+  pages/               # ページコンポーネント
+  lib/contentLoader.ts # content/ からのデータ読み込み
+  contexts/            # LanguageContext (日英切替)
+content/               # コンテンツデータ (JSON + Markdown)
+public/admin/          # (未使用) CMS は Pages CMS に移行済み
+scripts/
+  generate-keio-fallbacks.mjs  # 慶應サーバー向け SPA fallback
+  generate-sitemap.mjs         # sitemap.xml 生成
+  check-nonascii-paths.mjs     # 全角ファイル名検出
+  check-internal-links.mjs     # 内部リンクチェック
+docs/                  # 計画書・仕様書・ガイド
+.pages.yml             # Pages CMS 設定
+```
+
+## 親リポジトリ
+
+[rossoandoy/okubo-hp](https://github.com/rossoandoy/okubo-hp) — 企画・仕様ドキュメントとサブモジュール管理
